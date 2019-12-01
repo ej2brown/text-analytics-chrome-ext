@@ -3,14 +3,14 @@
     "version": "1.0",
     "description": "Scraper helper",
     "background": {
-        "scripts": ["background.js", "injectAJAXInterceptor.js"],
+        "scripts": ["background.js"],
         "persistent": false
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*"],
+            "matches": ["http://*/*", "https://*/*"],
             "run_at": "document_start",
-            "js": ["contentscript.js", "inject.js"]
+            "js": ["contentscript.js", "injectAJAXInterceptor.js"]
         }
     ],
     "web_accessible_resources": ["injected.js"],
