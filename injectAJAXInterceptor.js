@@ -8,6 +8,7 @@
  *      - captured requests on the the fly and to save those requests.
  *      - Consider: Also quick way to select and save the responses would be nice.
  */
+console.log('Injecting AJAX Interceptor!');
 var s = document.createElement('script');
 s.src = chrome.extension.getURL('injected.js');
 s.onload = function() {
