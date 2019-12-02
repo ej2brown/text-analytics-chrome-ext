@@ -8,6 +8,7 @@
  *      - captured requests on the the fly and to save those requests.
  *      - Consider: Also quick way to select and save the responses would be nice.
  */
+console.log('Injected.js!');
 (function(xhr) {
 
     var XHR = XMLHttpRequest.prototype;
@@ -65,9 +66,13 @@
                         // printing url, request headers, response headers, response body, to console
 
                         console.log(this._url);
-                        console.log(JSON.parse(this._requestHeaders));
+                        console.log(this._requestHeaders);
+                        // console.log(JSON.parse(this._requestHeaders));
                         console.log(responseHeaders);
-                        console.log(JSON.parse(arr));                        
+                        
+                        // THIS IS THE RESPONSE CONTENT. TODO - STORE THIS CONTENT ALONG WITH THE REQUEST URL. We can sort the request history by the size of the response content. The largest responses are probably what's most relevant.
+                        console.log(arr);                        
+                        // console.log(JSON.parse(arr));                        
 
                     } catch(err) {
                         console.log("Error in responseType try catch");
