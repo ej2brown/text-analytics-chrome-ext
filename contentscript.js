@@ -25,8 +25,9 @@ analysisResultElement.innerHTML = 'TODO - ANALYSIS CONTENT';
 analysisResultElement.style.color = 'red';
 
 // We again use jQuery to insert this new div element into the webpage's html.
+// This will end up modifying html to something like <html><head></head><body><div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div></body>
 // We should see the text 'TODO - ANALYSIS CONTENT' appear somewhere on every webpage we visit.
-$(document).find('body').append(analysisResultElement);
+webpageBody.append(analysisResultElement);
 
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
 // information - like a password. Don't want to publish it on an open source project!
@@ -99,10 +100,12 @@ $.ajax({
     // Ascording to Azure Sentiment Analysis, score of 0.5 is absulte neutral, 0 is more negative, 1 is most positive.
     // Let's consider score in between 0.4 and 0.6 to be neutral
     if (averageScore >= 0.4 && averageScore <= 0.6) {
+        // We are modifying the <div> element we created above to have text 'NEUTRAL' instead of 'TODO - ANALYSIS CONTENT'
         analysisResultElement.innerHTML = 'NEUTRAL';
         // TODO TURN THIS LABEL WHITE
     }
-    // TODO Let's consider score of less than 0.4 to be negative
+    // TODO Let's consider score of less than 0.4 to be negative. Do the same thing as above but for average score of < 0.4
+    //       and the text 'NEGATIVE' here.
     // TODO TURN THIS LABEL RED 
 
     // TODO Let's consider score of greater than 0.6 to be positive
