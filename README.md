@@ -1,5 +1,13 @@
-# Project_Numero
 ## Introduction
+Chrome Extension Tool
+
+Uses Microsoft Azure text analytics AI services API for insights on given text. Chrome extension feature allows users to see the texts cognitive sentiment and scores it. 
+
+[More on Microsoft Azure](https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/)
+[More on Chrome Extensions](https://developer.chrome.com/extensions/)
+
+## Getting Started 
+
 A experimentation project on chrome extention.
 See https://developer.chrome.com/extensions/getstarted
 https://developer.chrome.com/extensions/overview
