@@ -35,7 +35,7 @@ webpageBody.append(analysisResultElement);
 
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
 // information - like a password. Don't want to publish it on an open source project!
-var apiKey = ''; // TODO COPY AND PASTE THE API KEY HERE FOR NOW!
+var apiKey = '5b7c8f9208de40a2ba0e57c0f91473ed'; // TODO COPY AND PASTE THE API KEY HERE FOR NOW!
 
 // We are now going to send a snippet of the website's text and send for analysis.
 // The following code is taken from: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v2-1/operations/56f30ceeeda5650db055a3c9
@@ -51,9 +51,9 @@ var params = {
 var requestContent = {
     'documents': [
         {
-            'countryHint': 'US',
+            'language': 'en',
             'id': '1',
-            'text': 'I am a sad boy' // TODO This is the text that we are sending to analyze. Let's work on sending in the text from the webpage to be analyzed.
+            'text': webpageBodyText // TODO This is the text that we are sending to analyze. Let's work on sending in the text from the webpage to be analyzed.
         }
     ]
 }
@@ -61,11 +61,11 @@ var requestContent = {
 // This is how we send a request to Azure's Text Analytics service. This pattern can be used to send any request to any
 // server (Relisted server included!)
 $.ajax({
-    url: 'https://eastus2.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?' + $.param(params),
+    url: 'https://eastus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?' + $.param(params),
     beforeSend: function(xhrObj) {
         // Request headers
         xhrObj.setRequestHeader('Content-Type','application/json');
-        xhrObj.setRequestHeader('Ocp-Apim-Subscription-Key', '');
+        xhrObj.setRequestHeader('Ocp-Apim-Subscription-Key', apiKey);
     },
     type: "POST",
     // Request body
@@ -107,13 +107,23 @@ $.ajax({
         // We are modifying the <div> element we created above to have text 'NEUTRAL' instead of 'TODO - ANALYSIS CONTENT'
         analysisResultElement.innerHTML = 'NEUTRAL';
         // TODO TURN THIS LABEL WHITE
+        analysisResultElement.style.color = 'white';
     }
+
     // TODO Let's consider score of less than 0.4 to be negative. Do the same thing as above but for average score of < 0.4
     //       and the text 'NEGATIVE' here.
     // TODO TURN THIS LABEL RED 
+    if (averageScore < 0.4) {
+        analysisResultElement.innerHTML = 'NEGATIVE';
+        analysisResultElement.style.color = 'red';
+    }
 
     // TODO Let's consider score of greater than 0.6 to be positive
     // TODO TURN THIS LABEL GREEN 
+    if (averageScore > 0.6) {
+        analysisResultElement.innerHTML = 'POSITIVE';
+        analysisResultElement.style.color = 'green';
+    }
 })
 // If the server request fails, we will need to handle the case here in .fail method.
 .fail(function() {
