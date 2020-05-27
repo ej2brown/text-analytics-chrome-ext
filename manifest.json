@@ -2,9 +2,13 @@
     "name": "Project Numero",
     "version": "1.0",
     "description": "Scraper helper",
+    "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
+    },
+    "page_action": {
+      "default_popup": "popup.html"
     },
     "content_scripts": [
         {
