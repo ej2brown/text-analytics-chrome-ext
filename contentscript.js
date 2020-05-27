@@ -23,10 +23,14 @@ analysisResultElement.innerHTML = 'TODO - ANALYSIS CONTENT';
 // This is an example of how to modify css styles in javascript. It is same as doing style="{color: red}".
 // To get an element to always appear at the top of the page, take a look at css style {position: absolute; top: 0; left: 0;}
 analysisResultElement.style.color = 'red';
+analysisResultElement.style.position = 'absolute';
+analysisResultElement.style.left = 0;
+analysisResultElement.style.top = 0;
 
 // We again use jQuery to insert this new div element into the webpage's html.
 // This will end up modifying html to something like <html><head></head><body><div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div></body>
 // We should see the text 'TODO - ANALYSIS CONTENT' appear somewhere on every webpage we visit.
+console.log(analysisResultElement)
 webpageBody.append(analysisResultElement);
 
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
