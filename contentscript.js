@@ -10,7 +10,6 @@ var webpageBody = $(document).find("body");
 // This way, we have the texts in the given article that we can use for text analysis.
 var webpageBodyText = webpageBody.text();
 // This is just a test output to browser console (so that we can see quckly read what's in the webpage)
-console.log(webpageBodyText);
 
 // We are now creating a new element to insert into the html structure.
 // This element is <div></div>
@@ -30,7 +29,6 @@ analysisResultElement.style.top = 0;
 // We again use jQuery to insert this new div element into the webpage's html.
 // This will end up modifying html to something like <html><head></head><body><div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div></body>
 // We should see the text 'TODO - ANALYSIS CONTENT' appear somewhere on every webpage we visit.
-console.log(analysisResultElement);
 webpageBody.append(analysisResultElement);
 
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
@@ -76,7 +74,6 @@ $.ajax({
   // This server request call is an asynchronous one. $.ajax gives us an ability to handle the data that's returned by the
   // server here via .done method.
   .done(function (data) {
-    console.log(data);
     // We have the text analytics data from the service!! If we take a look at the browser console (F12 button), we can
     // examine the structure of the data. It's of the structure: {documents: [{id: xx, score: xx}, {id: xx, score: xx}]}
     // So we will extract the results by peeling one layer at a time.
