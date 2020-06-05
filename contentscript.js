@@ -33,7 +33,7 @@ webpageBody.append(analysisResultElement);
 
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
 // information - like a password. Don't want to publish it on an open source project!
-var apiKey = "5b7c8f9208de40a2ba0e57c0f91473ed"; // TODO COPY AND PASTE THE API KEY HERE FOR NOW!
+var apiKey = ""; // TODO COPY AND PASTE THE API KEY HERE FOR NOW!
 
 // We are now going to send a snippet of the website's text and send for analysis.
 // The following code is taken from: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v2-1/operations/56f30ceeeda5650db055a3c9
