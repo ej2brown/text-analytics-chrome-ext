@@ -12,7 +12,7 @@ var webpageBody = $(document).find("body");
 var webpageBodyText = webpageBody.text();
 
 // removes any extra white spaces to significantly reduce length count
-const webpageTextTrim = webpageBodyText.replace(/\s+/g,' ').trim();
+const webpageTextTrim = webpageBodyText.replace(/\s+/g, ' ').trim();
 console.log(webpageTextTrim);
 console.log(webpageTextTrim.length);
 
@@ -44,8 +44,7 @@ analysisResultElement.style.top = 0;
 webpageBody.append(analysisResultElement);
 console.log(analysisResultElement);
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
-// information - like a password. Don't want to publish it on an open source project!
-var apiKey = ""; 
+var apiKey = "";
 
 // We are now going to send a snippet of the website's text and send for analysis.
 // The following code is taken from: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v2-1/operations/56f30ceeeda5650db055a3c9
@@ -58,15 +57,25 @@ var params = {
 // 1 group of texts that need to be analyzed. (Notice 'documents' is an array - [] signify an array. An array of objects
 // can be expressed in JavaScript as the following: [{'name': 'object1'}, {'name': 'object2'}].
 // This array contains 2 objects that has names object1 and object2)
-var requestContent = {
-  documents: [
+
+let documentId = 0;
+const documentsArr = []
+const requestContentResult = strChunksArr.map((chunk) => {
+  documentId ++;
+  documentsArr.push(
     {
       language: "en",
-      id: "1",
-      text: webpageTextTrim, // TODO This is the text that we are sending to analyze. Let's work on sending in the text from the webpage to be analyzed.
-    },
-  ],
-};
+      id: documentId,
+      text: chunk, // This is the text that we are sending to analyze. Sends in the text from the webpage to be analyzed.
+    }
+  )
+})
+console.log(documentsArr)
+
+var requestContent = {
+  "documents": documentsArr,
+}
+
 console.log(requestContent)
 
 // This is how we send a request to Azure's Text Analytics service. This pattern can be used to send any request to any
@@ -74,8 +83,7 @@ console.log(requestContent)
 
 $.ajax({
   url:
-    "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?" +
-    $.param(params),
+    "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?" + $.param(params),
   beforeSend: function (xhrObj) {
     // Request headers
     xhrObj.setRequestHeader("Content-Type", "application/json");
@@ -83,7 +91,7 @@ $.ajax({
   },
   type: "POST",
   // Request body
-  data: JSON.stringify(requestContent),
+  data: JSON.stringify(requestContent1),
 })
   // This server request call is an asynchronous one. $.ajax gives us an ability to handle the data that's returned by the
   // server here via .done method.
@@ -119,20 +127,17 @@ $.ajax({
     if (averageScore >= 0.4 && averageScore <= 0.6) {
       // We are modifying the <div> element we created above to have text 'NEUTRAL' instead of 'TODO - ANALYSIS CONTENT'
       analysisResultElement.innerHTML = "NEUTRAL";
-      // TODO TURN THIS LABEL WHITE
+      // turns label white
       analysisResultElement.style.color = "white";
     }
 
-    // TODO Let's consider score of less than 0.4 to be negative. Do the same thing as above but for average score of < 0.4
-    //       and the text 'NEGATIVE' here.
-    // TODO TURN THIS LABEL RED
+    // score of less than 0.4 to be negative. Do the same thing as above but for average score of < 0.4 and the text 'NEGATIVE' here. Turns label red
     if (averageScore < 0.4) {
       analysisResultElement.innerHTML = "NEGATIVE";
       analysisResultElement.style.color = "red";
     }
 
-    // TODO Let's consider score of greater than 0.6 to be positive
-    // TODO TURN THIS LABEL GREEN
+    // score of greater than 0.6 to be positive. Turns label green
     if (averageScore > 0.6) {
       analysisResultElement.innerHTML = "POSITIVE";
       analysisResultElement.style.color = "green";
