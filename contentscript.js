@@ -8,8 +8,20 @@
 var webpageBody = $(document).find("body");
 // jQuery lets us extract every text that's in an element. In our case, we are extracting all text in the body.
 // This way, we have the texts in the given article that we can use for text analysis.
+
 var webpageBodyText = webpageBody.text();
-// This is just a test output to browser console (so that we can see quckly read what's in the webpage)
+
+// removes any extra white spaces to significantly reduce length count
+const webpageTextTrim = webpageBodyText.replace(/\s+/g,' ').trim();
+console.log(webpageTextTrim);
+console.log(webpageTextTrim.length);
+
+function chunkString(str, length) {
+  return str.match(new RegExp('.{1,' + length + '}', 'g'));
+}
+
+const strChunksArr = chunkString(webpageTextTrim, 5120)
+console.log(strChunksArr);
 
 // We are now creating a new element to insert into the html structure.
 // This element is <div></div>
@@ -30,10 +42,10 @@ analysisResultElement.style.top = 0;
 // This will end up modifying html to something like <html><head></head><body><div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div></body>
 // We should see the text 'TODO - ANALYSIS CONTENT' appear somewhere on every webpage we visit.
 webpageBody.append(analysisResultElement);
-
+console.log(analysisResultElement);
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
 // information - like a password. Don't want to publish it on an open source project!
-var apiKey = ""; // TODO COPY AND PASTE THE API KEY HERE FOR NOW!
+var apiKey = ""; 
 
 // We are now going to send a snippet of the website's text and send for analysis.
 // The following code is taken from: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v2-1/operations/56f30ceeeda5650db055a3c9
@@ -51,13 +63,15 @@ var requestContent = {
     {
       language: "en",
       id: "1",
-      text: webpageBodyText, // TODO This is the text that we are sending to analyze. Let's work on sending in the text from the webpage to be analyzed.
+      text: webpageTextTrim, // TODO This is the text that we are sending to analyze. Let's work on sending in the text from the webpage to be analyzed.
     },
   ],
 };
+console.log(requestContent)
 
 // This is how we send a request to Azure's Text Analytics service. This pattern can be used to send any request to any
 // server (Relisted server included!)
+
 $.ajax({
   url:
     "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment?" +
@@ -74,6 +88,7 @@ $.ajax({
   // This server request call is an asynchronous one. $.ajax gives us an ability to handle the data that's returned by the
   // server here via .done method.
   .done(function (data) {
+    console.log(data)
     // We have the text analytics data from the service!! If we take a look at the browser console (F12 button), we can
     // examine the structure of the data. It's of the structure: {documents: [{id: xx, score: xx}, {id: xx, score: xx}]}
     // So we will extract the results by peeling one layer at a time.
@@ -98,7 +113,7 @@ $.ajax({
 
     // We now calculate the average scores
     var averageScore = totalScore / numberOfScores;
-
+    console.log("AVG:", averageScore)
     // Ascording to Azure Sentiment Analysis, score of 0.5 is absulte neutral, 0 is more negative, 1 is most positive.
     // Let's consider score in between 0.4 and 0.6 to be neutral
     if (averageScore >= 0.4 && averageScore <= 0.6) {
@@ -122,8 +137,8 @@ $.ajax({
       analysisResultElement.innerHTML = "POSITIVE";
       analysisResultElement.style.color = "green";
     }
-    chrome.storage.sync.set({analysisResultElement: analysisResultElement.innerHTML}, function() {
-        console.log('The element is ready.');
+    chrome.storage.sync.set({ analysisResultElement: analysisResultElement.innerHTML }, function () {
+      console.log('The element is ready.');
     })
 
   })
