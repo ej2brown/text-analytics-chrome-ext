@@ -1,5 +1,5 @@
   {
-    "name": "Project Numero",
+    "name": "Text Analytics",
     "version": "1.0",
     "description": "Scraper helper",
     "permissions": ["activeTab", "declarativeContent", "storage"],
