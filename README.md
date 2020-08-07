@@ -3,7 +3,7 @@
 
 Uses Microsoft Azure text analytics AI services API for insights on given text. Chrome extension feature allows users to see the texts cognitive sentiment and scores it. User can click on the Chrome extension icon to see results.
 
-!['Extension Display Screenshot'](images/extension.png)
+!['Extension Display Screenshot'](images/ext-screenshot.png)
 
 ## Getting Started 
 1. Open the file "contentscript.js" and insert your Azure subscription key into `const apiKey = "";`
