@@ -1,6 +1,12 @@
-let cognitiveRating = document.getElementById("cognitiveRating");
+const cognitiveRating = document.getElementById("cognitiveRating");
+const displayResults = document.getElementById("displayResults");
+const button = document.getElementById("btn");
 
-chrome.storage.sync.get('analysisResultElement', function(data) {
-    cognitiveRating.innerHTML = data.analysisResultElement;
-    cognitiveRating.setAttribute('value', data.analysisResultElement);
+button.addEventListener("click", () => {
+  chrome.storage.sync.get("analyticsResult", ({analyticsResult}) => {
+    console.log('Value currently is ' + analyticsResult);
+    cognitiveRating.innerHTML = analyticsResult;
+    cognitiveRating.setAttribute('value', analyticsResult);
+    displayResults.classList.remove("hidden")
   });
+});
