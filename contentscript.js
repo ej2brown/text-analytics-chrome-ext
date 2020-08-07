@@ -23,26 +23,9 @@ function chunkString(str, length) {
 const strChunksArr = chunkString(webpageTextTrim, 5120)
 console.log(strChunksArr);
 
-// We are now creating a new element to insert into the html structure.
-// This element is <div></div>
-const analysisResultElement = document.createElement("div");
-// We set element id so that it looks like <div id="analysisResultDiv"></div>
-analysisResultElement.id = "analysisResultDiv";
-// We set the inner content of this element. Now the element looks like <div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div>
-analysisResultElement.innerHTML = "TODO - ANALYSIS CONTENT";
-// TODO We need to dress up this element and make it always appear on top of the page. Use css styles to achieve this.
-// This is an example of how to modify css styles in javascript. It is same as doing style="{color: red}".
-// To get an element to always appear at the top of the page, take a look at css style {position: absolute; top: 0; left: 0;}
-analysisResultElement.style.color = "red";
-analysisResultElement.style.position = "absolute";
-analysisResultElement.style.left = 0;
-analysisResultElement.style.top = 0;
-
 // We again use jQuery to insert this new div element into the webpage's html.
 // This will end up modifying html to something like <html><head></head><body><div id="analysisResultDiv">TODO - ANALYSIS CONTENT</div></body>
 // We should see the text 'TODO - ANALYSIS CONTENT' appear somewhere on every webpage we visit.
-webpageBody.append(analysisResultElement);
-console.log(analysisResultElement);
 // We are going to extract Azure subscription key from chrome extention options. The subscription key is a sensitive
 var apiKey = "";
 
